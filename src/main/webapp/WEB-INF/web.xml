@@ -10,7 +10,17 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Example-Servlet</servlet-name>
-        <url-pattern>/api/*</url-pattern>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>UserRegisterServlet</servlet-name>
+        <servlet-class>com.mamba.talk.controller.user.UserRegisterController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserRegisterServlet</servlet-name>
+        <url-pattern>/user/register</url-pattern>
     </servlet-mapping>
 
 </web-app>
