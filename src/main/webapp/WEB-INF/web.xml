@@ -10,7 +10,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Example-Servlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/talk/*</url-pattern>
     </servlet-mapping>
 
 

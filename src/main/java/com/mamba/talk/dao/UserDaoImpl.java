@@ -19,10 +19,16 @@ public class UserDaoImpl {
      * @return
      */
     public boolean insertUser(UserBean userBean) {
-        String sql = "insert into user ('user_name','password','salt') values (?,?,?)";
+        String sql = "insert into user (user_name,password,salt) values (?,?,?)";
 
         String[] params = new String[]{userBean.getUsername(), userBean.getPassword(), userBean.getSalt()};
 
         return dbUtil.insert(sql, params);
+    }
+
+    public UserBean findUser(String username) {
+        String sql = "select *from user where user_name = ?";
+
+        return dbUtil.queryOne(sql, username);
     }
 }

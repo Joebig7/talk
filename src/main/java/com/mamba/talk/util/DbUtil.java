@@ -1,9 +1,8 @@
 package com.mamba.talk.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import com.mamba.talk.model.bean.UserBean;
+
+import java.sql.*;
 import java.util.Objects;
 
 /**
@@ -21,7 +20,7 @@ public class DbUtil {
 
     public Connection getConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Connection");
+            Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -36,6 +35,9 @@ public class DbUtil {
         conn = getConnection();
         try {
             preparedStatement = conn.prepareStatement(sql, params);
+            preparedStatement.setString(1, params[0]);
+            preparedStatement.setString(2, params[1]);
+            preparedStatement.setString(3, params[2]);
             preparedStatement.execute();
             result = true;
         } catch (SQLException throwables) {
@@ -44,6 +46,28 @@ public class DbUtil {
             close();
             return result;
         }
+    }
+
+    public UserBean queryOne(String sql, String... params) {
+        conn = getConnection();
+        try {
+            preparedStatement = conn.prepareStatement(sql, params);
+            preparedStatement.setString(1, params[0]);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                UserBean userBean = new UserBean();
+                userBean.setUsername(resultSet.getString("user_name"));
+                userBean.setSalt(resultSet.getString("salt"));
+                userBean.setPassword(resultSet.getString("password"));
+
+                return userBean;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
     }
 
 
