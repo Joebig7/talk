@@ -1,10 +1,16 @@
 package com.mamba.talk.service;
 
+import com.mamba.talk.controller.constant.ExceptionConstant;
 import com.mamba.talk.dao.UserDaoImpl;
 import com.mamba.talk.exception.ServiceException;
 import com.mamba.talk.model.bean.UserBean;
+import com.mamba.talk.model.common.RestResp;
 import com.mamba.talk.util.Md5Util;
 import com.mamba.talk.util.StringUtil;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * @Author JoeBig7
@@ -54,5 +60,33 @@ public class UserServiceImpl {
 
     public UserBean findUserByUserName(String username) {
         return userDao.findUser(username);
+    }
+
+    /**
+     * @param username
+     * @param password
+     */
+    public RestResp login(String username, String password, HttpServletRequest request) {
+
+        UserBean userBean = findUserByUserName(username);
+
+        if (Objects.isNull(userBean)) {
+            return new RestResp("username or password is not valid", 200, null);
+        }
+
+        String realPwd = userBean.getPassword();
+        String salt = userBean.getSalt();
+
+        String sourcePwd = Md5Util.MD5(new StringBuilder(password).append(salt).toString());
+
+        if (!realPwd.equals(sourcePwd)) {
+            return new RestResp(ExceptionConstant.USE_PWD_ERROR, 200, null);
+        }
+
+
+//        Cookie userCookie = new Cookie("userId",userBean.get)
+
+        return null;
+
     }
 }
