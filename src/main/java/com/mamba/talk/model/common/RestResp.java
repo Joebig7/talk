@@ -18,6 +18,7 @@ public class RestResp {
     public RestResp() {
         this.msg = SUCCESS;
         this.code = SUCCESS_CODE;
+        this.data = null;
     }
 
     public RestResp(String msg, Integer code, Object data) {

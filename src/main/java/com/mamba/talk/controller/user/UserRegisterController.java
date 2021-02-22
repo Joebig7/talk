@@ -1,11 +1,11 @@
 package com.mamba.talk.controller.user;
 
-import com.google.gson.Gson;
 import com.mamba.talk.controller.constant.ExceptionConstant;
 import com.mamba.talk.controller.constant.UserConstant;
 import com.mamba.talk.exception.IllegalRequestArgumentException;
 import com.mamba.talk.model.common.RestResp;
 import com.mamba.talk.service.UserServiceImpl;
+import com.mamba.talk.util.JsonUtil;
 import com.mamba.talk.util.StringUtil;
 
 import javax.servlet.ServletException;
@@ -48,9 +48,9 @@ public class UserRegisterController extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
 
-        Gson gson = new Gson();
+        out.println(JsonUtil.toJson(new RestResp()));
+        out.flush();
 
-        out.println(gson.toJson(new RestResp()));
     }
 
 }

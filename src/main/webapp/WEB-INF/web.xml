@@ -23,4 +23,21 @@
         <url-pattern>/user/register</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserLoginServlet</servlet-name>
+        <servlet-class>com.mamba.talk.controller.user.UserLoginController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserLoginServlet</servlet-name>
+        <url-pattern>/user/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserLoginOutServlet</servlet-name>
+        <servlet-class>com.mamba.talk.controller.user.UserLoginOutController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserLoginOutServlet</servlet-name>
+        <url-pattern>/user/loginOut</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -57,6 +57,7 @@ public class DbUtil {
 
             while (resultSet.next()) {
                 UserBean userBean = new UserBean();
+                userBean.setId(resultSet.getLong("id"));
                 userBean.setUsername(resultSet.getString("user_name"));
                 userBean.setSalt(resultSet.getString("salt"));
                 userBean.setPassword(resultSet.getString("password"));

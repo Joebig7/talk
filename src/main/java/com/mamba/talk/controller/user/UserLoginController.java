@@ -3,7 +3,9 @@ package com.mamba.talk.controller.user;
 import com.mamba.talk.controller.constant.ExceptionConstant;
 import com.mamba.talk.controller.constant.UserConstant;
 import com.mamba.talk.exception.IllegalRequestArgumentException;
+import com.mamba.talk.model.common.RestResp;
 import com.mamba.talk.service.UserServiceImpl;
+import com.mamba.talk.util.JsonUtil;
 import com.mamba.talk.util.StringUtil;
 
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 /**
@@ -19,7 +22,6 @@ import java.util.logging.Logger;
  * @date 2021/2/8 18:21:43
  * @Description 用户登录Controller
  */
-@WebServlet(urlPatterns = "/user/register")
 public class UserLoginController extends HttpServlet {
 
     private Logger logger = Logger.getLogger("UserLoginController");
@@ -40,7 +42,11 @@ public class UserLoginController extends HttpServlet {
             throw new IllegalRequestArgumentException(ExceptionConstant.ILLEGAL_PARAMETER_EXCEPTION);
         }
 
-        userService.login(username,password,req);
+        RestResp restResp = userService.login(username, password, resp);
 
+        PrintWriter out = resp.getWriter();
+
+        out.println(JsonUtil.toJson(restResp));
+        out.flush();
     }
 }

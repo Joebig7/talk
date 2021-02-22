@@ -1,6 +1,7 @@
 package com.mamba.talk.service;
 
 import com.mamba.talk.controller.constant.ExceptionConstant;
+import com.mamba.talk.controller.constant.UserConstant;
 import com.mamba.talk.dao.UserDaoImpl;
 import com.mamba.talk.exception.ServiceException;
 import com.mamba.talk.model.bean.UserBean;
@@ -10,6 +11,7 @@ import com.mamba.talk.util.StringUtil;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
 /**
@@ -18,6 +20,8 @@ import java.util.Objects;
  * @description 用户业务层
  */
 public class UserServiceImpl {
+
+    public static final int COOKIE_EXPIRE_SECOND = 1800;
 
     private UserDaoImpl userDao = new UserDaoImpl();
 
@@ -66,7 +70,7 @@ public class UserServiceImpl {
      * @param username
      * @param password
      */
-    public RestResp login(String username, String password, HttpServletRequest request) {
+    public RestResp login(String username, String password, HttpServletResponse response) {
 
         UserBean userBean = findUserByUserName(username);
 
@@ -84,9 +88,54 @@ public class UserServiceImpl {
         }
 
 
-//        Cookie userCookie = new Cookie("userId",userBean.get)
+        Cookie userCookie = storeTokenToCookie(userBean);
 
-        return null;
+        response.addCookie(userCookie);
 
+        return new RestResp();
+    }
+
+    /**
+     * 登录成功将用户特定信息存进cookie
+     *
+     * @param userBean
+     * @return
+     */
+    private Cookie storeTokenToCookie(UserBean userBean) {
+
+        String token = new StringBuilder(userBean.getId() + "").append("-").append(userBean.getSalt()).toString();
+
+        Cookie cookie = new Cookie(UserConstant.TOKEN, token);
+
+        cookie.setMaxAge(COOKIE_EXPIRE_SECOND);
+
+        return cookie;
+    }
+
+
+    public RestResp loginOut(String username, HttpServletResponse response, HttpServletRequest request) {
+
+        UserBean userBean = findUserByUserName(username);
+        if (Objects.isNull(userBean)) {
+            return new RestResp("用户尚未登录或尚未注册", 200, null);
+        }
+
+        Cookie[] cookies = request.getCookies();
+
+        Long userId = userBean.getId();
+        String salt = userBean.getSalt();
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(UserConstant.TOKEN)) {
+                String token = cookie.getValue();
+                String[] components = token.split("-");
+                if (userId.equals(components[0]) && userId.equals(components[1])) {
+                    cookie.setMaxAge(-1);
+                    return new RestResp();
+                }
+            }
+        }
+
+        return new RestResp("用户尚未登录或尚未注册", 200, null);
     }
 }
