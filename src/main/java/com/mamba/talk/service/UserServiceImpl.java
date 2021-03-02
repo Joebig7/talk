@@ -20,9 +20,6 @@ import java.util.Objects;
  * @description 用户业务层
  */
 public class UserServiceImpl {
-
-    public static final int COOKIE_EXPIRE_SECOND = 1800;
-
     private UserDaoImpl userDao = new UserDaoImpl();
 
     /**
@@ -84,14 +81,13 @@ public class UserServiceImpl {
         String sourcePwd = Md5Util.MD5(new StringBuilder(password).append(salt).toString());
 
         if (!realPwd.equals(sourcePwd)) {
-            return new RestResp(ExceptionConstant.USE_PWD_ERROR, 200, null);
+            return new RestResp(ExceptionConstant.USER_PWD_ERROR, 200, null);
         }
 
 
         Cookie userCookie = storeTokenToCookie(userBean);
 
         response.addCookie(userCookie);
-
         return new RestResp();
     }
 
@@ -103,11 +99,11 @@ public class UserServiceImpl {
      */
     private Cookie storeTokenToCookie(UserBean userBean) {
 
-        String token = new StringBuilder(userBean.getId() + "").append("-").append(userBean.getSalt()).toString();
+        String token = new StringBuilder(userBean.getId() + "").append("-").append(userBean.getUsername()).append(userBean.getPortrait()).toString();
 
         Cookie cookie = new Cookie(UserConstant.TOKEN, token);
 
-        cookie.setMaxAge(COOKIE_EXPIRE_SECOND);
+        cookie.setMaxAge(UserConstant.COOKIE_EXPIRE_SECOND);
 
         return cookie;
     }

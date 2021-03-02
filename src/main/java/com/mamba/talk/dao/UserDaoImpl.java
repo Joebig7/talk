@@ -1,7 +1,7 @@
 package com.mamba.talk.dao;
 
+import com.mamba.talk.db.UserDbTemplate;
 import com.mamba.talk.model.bean.UserBean;
-import com.mamba.talk.util.DbUtil;
 
 /**
  * @Author JoeBig7
@@ -10,7 +10,7 @@ import com.mamba.talk.util.DbUtil;
  */
 public class UserDaoImpl {
 
-    private DbUtil dbUtil = new DbUtil();
+    private UserDbTemplate userDbTemplate = new UserDbTemplate();
 
     /**
      * 插入用户信息
@@ -23,12 +23,18 @@ public class UserDaoImpl {
 
         String[] params = new String[]{userBean.getUsername(), userBean.getPassword(), userBean.getSalt()};
 
-        return dbUtil.insert(sql, params);
+        return userDbTemplate.insertOne(sql, params);
     }
 
+    /**
+     * 根据用户名查询用户
+     *
+     * @param username
+     * @return
+     */
     public UserBean findUser(String username) {
         String sql = "select *from user where user_name = ?";
 
-        return dbUtil.queryOne(sql, username);
+        return userDbTemplate.queryOne(sql, username);
     }
 }

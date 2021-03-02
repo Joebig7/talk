@@ -13,4 +13,9 @@ public class UserConstant {
 
     public static final String TOKEN = "token";
 
+    public static final int COOKIE_EXPIRE_SECOND = 1800;
+
+    public static final String USER_ID = "userId";
+
+
 }

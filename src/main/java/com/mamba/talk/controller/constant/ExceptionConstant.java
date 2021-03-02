@@ -8,6 +8,6 @@ public class ExceptionConstant {
 
     public static final String ILLEGAL_PARAMETER_EXCEPTION = "请求参数不合法";
 
-    public static final String USE_PWD_ERROR = "用户名或者密码不正确";
+    public static final String USER_PWD_ERROR = "用户名或者密码不正确";
 
 }

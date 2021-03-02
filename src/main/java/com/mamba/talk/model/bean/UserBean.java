@@ -14,6 +14,8 @@ public class UserBean {
 
     private String salt;
 
+    private String portrait;
+
     public Long getId() {
         return id;
     }
@@ -44,5 +46,13 @@ public class UserBean {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
     }
 }
