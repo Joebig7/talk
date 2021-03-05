@@ -41,6 +41,43 @@
         <url-pattern>/user/loginOut</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PostPublishServlet</servlet-name>
+        <servlet-class>com.mamba.talk.controller.post.PostPublishController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostPublishServlet</servlet-name>
+        <url-pattern>/post/publish</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PostDeleteServlet</servlet-name>
+        <servlet-class>com.mamba.talk.controller.post.PostDeleteController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostDeleteServlet</servlet-name>
+        <url-pattern>/post/delete</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>PostGetServlet</servlet-name>
+        <servlet-class>com.mamba.talk.controller.post.PostGetController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostGetServlet</servlet-name>
+        <url-pattern>/post/get</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PostListServlet</servlet-name>
+        <servlet-class>com.mamba.talk.controller.post.PostListController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostListServlet</servlet-name>
+        <url-pattern>/post/list</url-pattern>
+    </servlet-mapping>
+
 
     <filter>
         <filter-name>authenticationFilter</filter-name>

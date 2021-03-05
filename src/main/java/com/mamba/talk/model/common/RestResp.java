@@ -21,6 +21,12 @@ public class RestResp {
         this.data = null;
     }
 
+    public RestResp(Object data) {
+        this.msg = SUCCESS;
+        this.code = SUCCESS_CODE;
+        this.data = data;
+    }
+
     public RestResp(String msg, Integer code, Object data) {
         this.msg = msg;
         this.code = code;

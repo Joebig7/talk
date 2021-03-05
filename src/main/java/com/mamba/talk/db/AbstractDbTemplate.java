@@ -1,7 +1,5 @@
 package com.mamba.talk.db;
 
-import com.mamba.talk.model.bean.UserBean;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -102,5 +100,33 @@ public abstract class AbstractDbTemplate<T> {
     }
 
     public abstract int doUpdateOne(Connection conn, PreparedStatement preparedStatement, String sql, String... params) throws SQLException;
+
+
+    public boolean deleteOne(String sql, Integer... params) {
+        conn = getConnection();
+        try {
+            return doDeleteOne(conn, preparedStatement, sql, params);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public abstract boolean doDeleteOne(Connection conn, PreparedStatement preparedStatement, String sql, Integer... params) throws SQLException;
+
+
+    public T findById(String sql, Integer... params) {
+        conn = getConnection();
+        try {
+            return doFindById(conn, preparedStatement, sql, params);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public abstract T doFindById(Connection conn, PreparedStatement preparedStatement, String sql, Integer... params) throws SQLException;
 
 }

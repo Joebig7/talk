@@ -3,7 +3,9 @@ package com.mamba.talk.controller.post;
 import com.mamba.talk.controller.constant.ExceptionConstant;
 import com.mamba.talk.controller.constant.PostConstant;
 import com.mamba.talk.exception.IllegalRequestArgumentException;
+import com.mamba.talk.model.common.RestResp;
 import com.mamba.talk.service.PostServiceImpl;
+import com.mamba.talk.util.JsonUtil;
 import com.mamba.talk.util.StringUtil;
 
 import javax.servlet.ServletException;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @Author JoeBig7
@@ -31,6 +34,10 @@ public class PostPublishController extends HttpServlet {
             throw new IllegalRequestArgumentException(ExceptionConstant.ILLEGAL_PARAMETER_EXCEPTION);
         }
 
-        postService.publish(title, content, id, req);
+        RestResp restResp = postService.publish(title, content, id, req);
+        PrintWriter out = resp.getWriter();
+
+        out.println(JsonUtil.toJson(restResp));
+        out.flush();
     }
 }

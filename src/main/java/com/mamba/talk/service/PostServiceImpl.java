@@ -44,4 +44,30 @@ public class PostServiceImpl {
         return new RestResp();
 
     }
+
+    /**
+     * 根据id删除帖子
+     *
+     * @param id
+     * @return
+     */
+    public RestResp deleteOne(String id) {
+        postDao.deleteOne(Integer.parseInt(id));
+        return new RestResp();
+    }
+
+    /**
+     * 根据id获取帖子
+     *
+     * @param id
+     * @return
+     */
+    public RestResp get(String id) {
+
+        PostBean postBean = postDao.findById(Integer.parseInt(id));
+
+        RestResp restResp = new RestResp(postBean);
+
+        return restResp;
+    }
 }

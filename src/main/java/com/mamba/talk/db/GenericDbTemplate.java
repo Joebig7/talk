@@ -16,12 +16,22 @@ public class GenericDbTemplate<T> extends AbstractDbTemplate<T> {
     }
 
     @Override
-    public T doQueryOne(Connection conn, PreparedStatement preparedStatement, String sql, String... params) throws SQLException{
+    public T doQueryOne(Connection conn, PreparedStatement preparedStatement, String sql, String... params) throws SQLException {
         return null;
     }
 
     @Override
     public int doUpdateOne(Connection conn, PreparedStatement preparedStatement, String sql, String... params) throws SQLException {
         return 0;
+    }
+
+    @Override
+    public boolean doDeleteOne(Connection conn, PreparedStatement preparedStatement, String sql, Integer... params) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public T doFindById(Connection conn, PreparedStatement preparedStatement, String sql, Integer... params) throws SQLException {
+        return null;
     }
 }
