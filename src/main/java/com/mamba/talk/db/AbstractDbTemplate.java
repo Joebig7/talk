@@ -77,9 +77,7 @@ public abstract class AbstractDbTemplate<T> {
     public T queryOne(String sql, String... params) {
         conn = getConnection();
         try {
-            doQueryOne(conn, preparedStatement, sql, params);
-
-
+            return doQueryOne(conn, preparedStatement, sql, params);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

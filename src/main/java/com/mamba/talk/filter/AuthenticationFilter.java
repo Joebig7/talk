@@ -18,9 +18,9 @@ import java.util.Objects;
  * @description 权限过滤器 如果已经登录则直接放行，并且将cookie的过期时间重置为半小时
  */
 public class AuthenticationFilter implements Filter {
-    private static final String LOGIN_PATH = "/user/login";
+    private static final String LOGIN_PATH = "/talk/user/login";
 
-    private static final String LOGIN_PAGE_PATH = "/login.html";
+    private static final String LOGIN_PAGE_PATH = "/talk/login.html";
 
     UserServiceImpl userService = new UserServiceImpl();
 
@@ -34,9 +34,9 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-        String contextPath = httpServletRequest.getServletContext().getContextPath();
+        String uri = httpServletRequest.getRequestURI();
 
-        if (!LOGIN_PATH.equals(contextPath) && !LOGIN_PAGE_PATH.equals(contextPath)) {
+        if (!LOGIN_PATH.equals(uri) && !LOGIN_PAGE_PATH.equals(uri)) {
             //判断是否已经登录
             Cookie[] cookies = httpServletRequest.getCookies();
 
@@ -63,6 +63,8 @@ public class AuthenticationFilter implements Filter {
             if (flag == false) {
                 httpServletRequest.getRequestDispatcher("/login.html").forward(httpServletRequest, httpServletResponse);
             }
+        } else {
+            filterChain.doFilter(request, response);
         }
     }
 
